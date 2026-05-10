@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: 222.2 84% 4.9%;
+      --foreground: 210 40% 98%;
+    }
+  }
+
+  body {
+    color: rgb(var(--foreground));
+    background: linear-gradient(135deg, #0a0e1a 0%, #1a1f2e 100%);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .gaming-card {
+    @apply bg-gaming-surface border border-gaming-border rounded-lg p-4 shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+
+  .gaming-button {
+    @apply bg-gaming-accent text-white px-4 py-2 rounded-lg font-semibold hover:bg-opacity-80 transition-all duration-200 shadow-lg hover:shadow-gaming-accent/50;
+  }
+
+  .hero-card {
+    @apply gaming-card cursor-pointer hover:scale-105 hover:border-gaming-accent transform transition-all duration-200;
+  }
+
+  .hero-card.selected {
+    @apply border-gaming-accent shadow-lg shadow-gaming-accent/30;
+  }
+}
