@@ -27,8 +27,7 @@ from typing import List, Dict, Optional, Any
 from datetime import datetime, timezone
 from urllib.parse import urljoin
 
-import requests
-import cloudscraper
+from curl_cffi import requests
 from bs4 import BeautifulSoup, Tag
 
 # ---------------------------------------------------------------------------
@@ -54,13 +53,13 @@ USER_AGENT = (
 )
 
 REQUEST_TIMEOUT = 30  # seconds
-MAX_RETRIES = 3
-RETRY_BACKOFF = 2  # exponential base (seconds)
+MAX_RETRIES = 5
+RETRY_BACKOFF = 3  # exponential base (seconds)
 
 # ---------------------------------------------------------------------------
 # HTTP utilities
 # ---------------------------------------------------------------------------
-_session = cloudscraper.create_scraper()
+_session = requests.Session(impersonate="chrome124")
 _session.headers.update({"User-Agent": USER_AGENT})
 
 

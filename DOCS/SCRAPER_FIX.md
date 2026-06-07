@@ -1,114 +1,91 @@
-# Scraper Repair & Automation Protocol
+I'll retrieve the job logs to understand what failed.Now let me check the workflow file and the scraper code to understand the context better:## Solution: Handle 403 Forbidden Error from Fandom Wiki
 
-## 1. The Cloudflare 403 Problem
-The MLBB Fandom Wiki uses Cloudflare Turnstile bot protection. Standard HTTP client handshakes (like the default Python `requests`) lack real browser TLS fingerprints and are instantly dropped with a `403 Forbidden` error.
+Problem: Your scraper is receiving a 403 Forbidden error when trying to fetch the Mobile Legends Fandom wiki pages. The site is blocking requests after 3 retry attempts.
 
-## 2. The Solution: TLS Impersonation Bypass
-We resolve this natively in our automated GitHub Actions pipeline by using `curl_cffi`. This library securely mimics the TLS fingerprints of modern desktop browsers (Chrome/Firefox), bypassing Cloudflare's bot detection for free without needing external API credits.
+Root Cause: The Fandom wiki is detecting and blocking automated requests from the GitHub Actions runner. While you're using cloudscraper (which is installed in the workflow), the requests are still being rejected.
 
-### Dependencies (`requirements.txt`)
-Ensure these packages are defined for the scripting environment:
-` ` `text
-curl_cffi==0.6.2
-beautifulsoup4==4.12.3
-pymongo==4.6.3
-` ` `
+Solutions:
 
-### Refactored Scraper Code (`scripts/mlbb_scraper.py`)
-` ` `python
-import os
-from curl_cffi import requests
-from bs4 import BeautifulSoup
-from pymongo import MongoClient
+1. Add Request Headers (Quickest Fix)
+Update your fetch_html() function to include more realistic browser headers:
 
-def get_mongo_client():
-    # Reads the URI securely from GitHub Secrets
-    mongo_uri = os.environ.get("MONGODB_URI")
-    if not mongo_uri:
-        raise ValueError("MONGODB_URI environment variable is missing!")
-    return MongoClient(mongo_uri)
-
-def scrape_and_sync():
-    print("Initializing secure browser impersonation session...")
-    # Impersonate Chrome 124 to bypass Cloudflare signatures
-    session = requests.Session(impersonate="chrome124")
-    
+Python
+def fetch_html(url: str) -> str:
+    """Fetch HTML with retry logic and realistic headers."""
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "Accept-Language": "en-US,en;q=0.9"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate",
+        "DNT": "1",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none",
+        "Cache-Control": "max-age=0",
     }
     
-    target_url = "https://mobile-legends.fandom.com/wiki/Hero_List"
-    response = session.get(target_url, headers=headers)
-    
-    if response.status_code != 200:
-        print(f"Extraction failed. Status Code: {response.status_code}")
-        return
-        
-    print("Page source grabbed successfully! Parsing DOM...")
-    soup = BeautifulSoup(response.text, "html.parser")
-    
-    # -------------------------------------------------------------
-    # PLACE YOUR SPECIFIC DATA EXTRACTION LOGIC FOR HEROES HERE
-    # -------------------------------------------------------------
-    extracted_heroes = [] 
-    
-    # Database Upsert Sync
-    if extracted_heroes:
-        client = get_mongo_client()
-        db = client["mlbb_db"]
-        heroes_collection = db["heroes"]
-        
-        for hero in extracted_heroes:
-            # Upsert prevents duplicate rows by matching hero_id
-            heroes_collection.update_one(
-                {"hero_id": hero["hero_id"]},
-                {"$set": hero},
-                upsert=True
+    last_exc = None
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            resp = _session.get(url, timeout=REQUEST_TIMEOUT, headers=headers)
+            resp.raise_for_status()
+            return resp.text
+        except requests.RequestException as exc:
+            last_exc = exc
+            logger.warning(
+                "Attempt %d/%d failed fetching %s: %s",
+                attempt, MAX_RETRIES, url, exc,
             )
-        print(f"Successfully synced {len(extracted_heroes)} heroes to MongoDB Atlas.")
+            if attempt < MAX_RETRIES:
+                sleep_sec = RETRY_BACKOFF ** attempt
+                logger.info("Retrying in %ds...", sleep_sec)
+                time.sleep(sleep_sec)
+    raise RuntimeError(f"Failed to fetch {url} after {MAX_RETRIES} attempts") from last_exc
+2. Increase Retry Delays
+The exponential backoff might be too aggressive. Increase the delays in your constants:
 
-if __name__ == "__main__":
-    scrape_and_sync()
-` ` `
+Python
+REQUEST_TIMEOUT = 30  # seconds
+MAX_RETRIES = 5       # Increase from 3
+RETRY_BACKOFF = 3     # Increase from 2 (now: 3s, 9s, 27s, 81s, 243s)
+3. Use CloudScraper More Effectively
+Initialize the session with additional parameters:
 
----
+Python
+_session = cloudscraper.create_scraper(
+    browser={
+        'browser': 'chrome',
+        'platform': 'windows',
+        'desktop': True
+    },
+    captcha={'provider': '2captcha', 'api_token': None}  # Allows fallback
+)
+_session.headers.update({"User-Agent": USER_AGENT})
+4. Add Graceful Fallback
+Modify your scrape_all_heroes() to use fallback data when the wiki is inaccessible:
 
-## 3. The Automation Pipeline (GitHub Actions)
-To run this automatically every day and push data directly to MongoDB Atlas, use this workflow file:
+Python
+def scrape_all_heroes() -> List[Dict[str, Any]]:
+    """Scrape full hero data, with fallback to cached/default data."""
+    try:
+        hero_list = scrape_hero_list()
+    except RuntimeError as e:
+        logger.error("Failed to fetch hero list: %s. Using fallback data.", e)
+        hero_list = _get_fallback_heroes()  # Implement this function
+    
+    logger.info("Scraping details for %d heroes...", len(hero_list))
+    # ... rest of function
+5. Update Workflow with Error Handling
+Modify .github/workflows/daily-sync.yml to continue on scraper failure:
 
-### File Path: `.github/workflows/schedule_sync.yml`
-` ` `yaml
-name: Automated MLBB Database Sync
+YAML
+- name: Run Scraper
+  run: |
+    cd scraper
+    python mlbb_scraper.py --output data || echo "Scraper failed, using cached data"
+  continue-on-error: true
+Recommended Approach: Start with Solution 1 (add realistic headers) combined with Solution 2 (increase retry delays). This is the least intrusive and most likely to work. If the issue persists, implement Solution 4 to provide a fallback mechanism so your workflow doesn't fail entirely.
 
-on:
-  schedule:
-    # Runs at 00:00 UTC every single day
-    - cron: '0 0 * * *'
-  workflow_dispatch: # Allows manual triggering via GitHub UI
 
-jobs:
-  sync-database:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout Repository Code
-      uses: actions/checkout@v4
-
-    - name: Set up Python Runtime
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-        cache: 'pip'
-
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Execute Scraper & Sync to Atlas
-      env:
-        # Securely maps your Mongo Connection string from GitHub Secrets
-        MONGODB_URI: ${{ secrets.MONGODB_URI }}
-      run: python scripts/mlbb_scraper.py
-` ` `

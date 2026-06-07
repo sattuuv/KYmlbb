@@ -27,7 +27,7 @@ jobs:
       - name: Install Python Dependencies
         run: |
           cd scraper
-          pip install requests beautifulsoup4 lxml cloudscraper
+          pip install requests beautifulsoup4 lxml curl-cffi
 
       - name: Run Scraper
         run: |
