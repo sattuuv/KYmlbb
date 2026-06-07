@@ -28,6 +28,7 @@ from datetime import datetime, timezone
 from urllib.parse import urljoin
 
 import requests
+import cloudscraper
 from bs4 import BeautifulSoup, Tag
 
 # ---------------------------------------------------------------------------
@@ -59,7 +60,7 @@ RETRY_BACKOFF = 2  # exponential base (seconds)
 # ---------------------------------------------------------------------------
 # HTTP utilities
 # ---------------------------------------------------------------------------
-_session = requests.Session()
+_session = cloudscraper.create_scraper()
 _session.headers.update({"User-Agent": USER_AGENT})
 
 

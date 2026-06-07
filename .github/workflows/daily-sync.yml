@@ -1,0 +1,61 @@
+name: Daily MLBB Scraper Sync
+
+on:
+  schedule:
+    - cron: '0 12 * * *' # Runs at 12:00 UTC daily
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+permissions:
+  contents: write # Needed to push updated JSON files
+
+jobs:
+  sync-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Python Dependencies
+        run: |
+          cd scraper
+          pip install requests beautifulsoup4 lxml cloudscraper
+
+      - name: Run Scraper
+        run: |
+          cd scraper
+          python mlbb_scraper.py --output data
+
+      - name: Copy Data to Application
+        run: |
+          mkdir -p src/data
+          cp scraper/data/*.json src/data/
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Node Dependencies
+        run: npm ci
+
+      - name: Seed Database
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: |
+          npx ts-node --compiler-options '{"module":"commonjs"}' src/lib/seed/seedDatabase.ts
+
+      - name: Commit Updated Data
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add src/data/*.json
+          git add scraper/data/*.json
+          # Only commit if there are changes
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore: automate daily data sync"
+          git push

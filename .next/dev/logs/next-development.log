@@ -1,0 +1,40 @@
+{"timestamp":"00:00:01.958","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:56.255","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:10:58.989Z | METHOD: GET | PATH: /"}
+{"timestamp":"00:00:57.148","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
+{"timestamp":"00:00:57.321","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:11:00.055Z | METHOD: GET | PATH: /api/heroes"}
+{"timestamp":"00:01:00.674","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:11:03.408Z | METHOD: POST | PATH: /api/counter"}
+{"timestamp":"00:01:02.873","source":"Server","level":"ERROR","message":"Gemini API error: 400 \"Bad Request\""}
+{"timestamp":"00:01:54.484","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:11:57.218Z | METHOD: POST | PATH: /api/counter"}
+{"timestamp":"00:01:54.878","source":"Server","level":"ERROR","message":"Gemini API error: 400 \"Bad Request\""}
+{"timestamp":"00:01:55.990","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:11:58.725Z | METHOD: POST | PATH: /api/counter"}
+{"timestamp":"00:01:56.215","source":"Server","level":"ERROR","message":"Gemini API error: 400 \"Bad Request\""}
+{"timestamp":"00:01:57.274","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:12:00.009Z | METHOD: POST | PATH: /api/counter"}
+{"timestamp":"00:01:57.483","source":"Server","level":"ERROR","message":"Gemini API error: 400 \"Bad Request\""}
+{"timestamp":"00:01:59.897","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:12:02.631Z | METHOD: POST | PATH: /api/counter"}
+{"timestamp":"00:02:00.098","source":"Server","level":"ERROR","message":"Gemini API error: 400 \"Bad Request\""}
+{"timestamp":"00:02:36.333","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:12:39.068Z | METHOD: POST | PATH: /api/counter"}
+{"timestamp":"00:02:36.657","source":"Server","level":"ERROR","message":"Gemini API error: 400 \"Bad Request\""}
+{"timestamp":"00:02:37.094","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:12:39.828Z | METHOD: POST | PATH: /api/counter"}
+{"timestamp":"00:02:37.268","source":"Server","level":"ERROR","message":"Gemini API error: 400 \"Bad Request\""}
+{"timestamp":"00:02:38.077","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:12:40.812Z | METHOD: POST | PATH: /api/counter"}
+{"timestamp":"00:02:38.266","source":"Server","level":"ERROR","message":"Gemini API error: 400 \"Bad Request\""}
+{"timestamp":"00:02:38.993","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:12:41.728Z | METHOD: POST | PATH: /api/counter"}
+{"timestamp":"00:02:39.173","source":"Server","level":"ERROR","message":"Gemini API error: 400 \"Bad Request\""}
+{"timestamp":"00:02:40.076","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:12:42.811Z | METHOD: POST | PATH: /api/counter"}
+{"timestamp":"00:02:40.254","source":"Server","level":"ERROR","message":"Gemini API error: 400 \"Bad Request\""}
+{"timestamp":"00:02:41.971","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:12:44.705Z | METHOD: POST | PATH: /api/counter"}
+{"timestamp":"00:02:42.156","source":"Server","level":"ERROR","message":"Gemini API error: 400 \"Bad Request\""}
+{"timestamp":"00:02:44.105","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:12:46.840Z | METHOD: POST | PATH: /api/counter"}
+{"timestamp":"00:02:44.285","source":"Server","level":"ERROR","message":"Gemini API error: 400 \"Bad Request\""}
+{"timestamp":"00:02:45.318","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:12:48.052Z | METHOD: POST | PATH: /api/counter"}
+{"timestamp":"00:02:45.479","source":"Server","level":"ERROR","message":"Gemini API error: 400 \"Bad Request\""}
+{"timestamp":"00:03:05.381","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:13:08.116Z | METHOD: POST | PATH: /api/counter"}
+{"timestamp":"00:03:05.986","source":"Server","level":"ERROR","message":"Gemini API error: 400 \"Bad Request\""}
+{"timestamp":"00:04:48.739","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:14:51.474Z | METHOD: POST | PATH: /api/seed"}
+{"timestamp":"00:04:49.279","source":"Server","level":"LOG","message":"🌱 Seeding database..."}
+{"timestamp":"00:04:49.429","source":"Server","level":"LOG","message":"✅ Upserted 0 new heroes, modified 0 existing heroes (total 27)"}
+{"timestamp":"00:04:49.431","source":"Server","level":"LOG","message":"⏭️ No item data found to seed. Skipping..."}
+{"timestamp":"00:04:49.432","source":"Server","level":"LOG","message":"🌱 Database seeding complete!"}
+{"timestamp":"00:05:21.577","source":"Server","level":"LOG","message":"[PROCESS LOG] 2026-06-07T09:15:24.312Z | METHOD: POST | PATH: /api/seed"}
+{"timestamp":"00:05:21.586","source":"Server","level":"LOG","message":"🌱 Seeding database..."}
+{"timestamp":"00:05:21.937","source":"Server","level":"ERROR","message":"Seed API error: MongoBulkWriteError: E11000 duplicate key error collection: test.heros index: heroId_1 dup key: { heroId: 1 }"}

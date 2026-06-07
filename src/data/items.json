@@ -1,0 +1,243 @@
+[
+  {
+    "itemId": 1,
+    "name": "Antique Cuirass",
+    "type": "defense",
+    "cost": 2170,
+    "stats": {
+      "physicalDef": 70,
+      "magicDef": 0,
+      "hp": 0,
+      "regen": 0
+    },
+    "passive": "Reduces enemy physical attack by 8% per stack (max 3).",
+    "tags": [
+      "physical_def",
+      "anti_burst"
+    ],
+    "imageUrl": "",
+    "counters": [],
+    "updatedAt": "2026-05-31T06:41:21.645654+00:00"
+  },
+  {
+    "itemId": 2,
+    "name": "Blade Armor",
+    "type": "defense",
+    "cost": 1960,
+    "stats": {
+      "physicalDef": 90,
+      "magicDef": 0,
+      "hp": 0,
+      "regen": 0
+    },
+    "passive": "Reflects 25% of basic attack damage taken as magic damage.",
+    "tags": [
+      "physical_def",
+      "anti_auto"
+    ],
+    "imageUrl": "",
+    "counters": [],
+    "updatedAt": "2026-05-31T06:41:21.645709+00:00"
+  },
+  {
+    "itemId": 3,
+    "name": "Athena's Shield",
+    "type": "defense",
+    "cost": 2150,
+    "stats": {
+      "physicalDef": 0,
+      "magicDef": 62,
+      "hp": 0,
+      "regen": 0
+    },
+    "passive": "Gain a shield that blocks 50% of incoming magic damage.",
+    "tags": [
+      "magic_def",
+      "anti_burst"
+    ],
+    "imageUrl": "",
+    "counters": [],
+    "updatedAt": "2026-05-31T06:41:21.645730+00:00"
+  },
+  {
+    "itemId": 4,
+    "name": "Radiant Armor",
+    "type": "defense",
+    "cost": 1880,
+    "stats": {
+      "physicalDef": 0,
+      "magicDef": 48,
+      "hp": 1200,
+      "regen": 20
+    },
+    "passive": "Reduces magic damage taken by 2-10 per stack.",
+    "tags": [
+      "magic_def",
+      "anti_sustain"
+    ],
+    "imageUrl": "",
+    "counters": [],
+    "updatedAt": "2026-05-31T06:41:21.645751+00:00"
+  },
+  {
+    "itemId": 5,
+    "name": "Twilight Armor",
+    "type": "defense",
+    "cost": 2200,
+    "stats": {
+      "physicalDef": 20,
+      "magicDef": 20,
+      "hp": 1500,
+      "regen": 0
+    },
+    "passive": "Blocks damage exceeding 600 from a single hit.",
+    "tags": [
+      "hp",
+      "anti_burst",
+      "anti_crit"
+    ],
+    "imageUrl": "",
+    "counters": [],
+    "updatedAt": "2026-05-31T06:41:21.645762+00:00"
+  },
+  {
+    "itemId": 6,
+    "name": "Dominance Ice",
+    "type": "defense",
+    "cost": 2010,
+    "stats": {
+      "physicalDef": 70,
+      "magicDef": 0,
+      "hp": 0,
+      "regen": 0
+    },
+    "passive": "Reduces enemy attack speed and shield/heal effect by 50%.",
+    "tags": [
+      "physical_def",
+      "anti_heal",
+      "anti_attack_speed"
+    ],
+    "imageUrl": "",
+    "counters": [],
+    "updatedAt": "2026-05-31T06:41:21.645772+00:00"
+  },
+  {
+    "itemId": 7,
+    "name": "Necklace of Durance",
+    "type": "magic",
+    "cost": 2050,
+    "stats": {
+      "physicalDef": 0,
+      "magicDef": 0,
+      "hp": 0,
+      "regen": 0
+    },
+    "passive": "Reduces enemy healing and shield by 50% for 3s.",
+    "tags": [
+      "anti_heal"
+    ],
+    "imageUrl": "",
+    "counters": [],
+    "updatedAt": "2026-05-31T06:41:21.645794+00:00"
+  },
+  {
+    "itemId": 8,
+    "name": "Sea Halberd",
+    "type": "attack",
+    "cost": 1950,
+    "stats": {
+      "physicalDef": 0,
+      "magicDef": 0,
+      "hp": 0,
+      "regen": 0
+    },
+    "passive": "Reduces enemy healing and shield by 50% for 3s.",
+    "tags": [
+      "anti_heal",
+      "physical_attack"
+    ],
+    "imageUrl": "",
+    "counters": [],
+    "updatedAt": "2026-05-31T06:41:21.645814+00:00"
+  },
+  {
+    "itemId": 9,
+    "name": "Cursed Helmet",
+    "type": "defense",
+    "cost": 1860,
+    "stats": {
+      "physicalDef": 0,
+      "magicDef": 24,
+      "hp": 1200,
+      "regen": 0
+    },
+    "passive": "Deals magic damage equal to 4% of max HP to nearby enemies.",
+    "tags": [
+      "magic_def",
+      "hp",
+      "aoe_magic"
+    ],
+    "imageUrl": "",
+    "counters": [],
+    "updatedAt": "2026-05-31T06:41:21.645824+00:00"
+  },
+  {
+    "itemId": 10,
+    "name": "Immortality",
+    "type": "defense",
+    "cost": 2200,
+    "stats": {
+      "physicalDef": 0,
+      "magicDef": 0,
+      "hp": 0,
+      "regen": 0
+    },
+    "passive": "Resurrects with 15% HP after 2.5s.",
+    "tags": [
+      "survival",
+      "anti_burst"
+    ],
+    "imageUrl": "",
+    "counters": [],
+    "updatedAt": "2026-05-31T06:41:21.645833+00:00"
+  },
+  {
+    "itemId": 11,
+    "name": "Tough Boots",
+    "type": "boots",
+    "cost": 720,
+    "stats": {
+      "physicalDef": 0,
+      "magicDef": 22,
+      "hp": 0,
+      "regen": 0
+    },
+    "passive": "Reduces CC duration by 30%.",
+    "tags": [
+      "magic_def",
+      "cc_reduction"
+    ],
+    "imageUrl": "",
+    "counters": [],
+    "updatedAt": "2026-05-31T06:41:21.645853+00:00"
+  },
+  {
+    "itemId": 12,
+    "name": "Warrior Boots",
+    "type": "boots",
+    "cost": 720,
+    "stats": {
+      "physicalDef": 22,
+      "magicDef": 0,
+      "hp": 0,
+      "regen": 0
+    },
+    "passive": "Increases physical defense.",
+    "tags": [
+      "physical_def"
+    ],
+    "imageUrl": "",
+    "counters": [],
+    "updatedAt": "2026-05-31T06:41:21.645872+00:00"
+  }
+]

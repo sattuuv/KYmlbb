@@ -1,1 +1,0 @@
-self.__REACT_LOADABLE_MANIFEST="{\"components\\\\HeroGrid.tsx -> @/data/heroes.json\":{\"id\":\"components\\\\HeroGrid.tsx -> @/data/heroes.json\",\"files\":[\"static/chunks/_app-pages-browser_src_data_heroes_json.js\"]}}"

@@ -17,5 +17,6 @@ You must strictly adhere to the following directory structure. Do not create new
 
 ## 3. Development Rules
 - **No Hardcoding:** Never hardcode MLBB hero stats, items, or counters in the frontend. All data must flow from the database or scraping scripts.
-- **Serverless Only:** This project is hosted on Vercel. Do not configure or suggest VPS, Docker, or Nginx setups.
+- **Serverless Only:** This project is hosted on Vercel. Do not configure or suggestby VPS, Docker, or Nginx setups.
 - **Incremental Static Regeneration (ISR):** Always prioritize ISR for Next.js pages to ensure fast load times while handling dynamic patch updates.
+- **bypass errors:** Instead of bypassing errors, fix them.

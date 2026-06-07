@@ -1,0 +1,37 @@
+name: Daily MLBB Data Scraper
+
+on:
+  schedule:
+    # Run every day at 05:00 UTC (1 hour before Vercel cron)
+    - cron: '0 5 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  scrape-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r scraper/requirements.txt
+
+      - name: Run Scraper
+        run: |
+          cd scraper
+          python mlbb_scraper.py --output ../src/data
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/heroes.json src/data/items.json
+          # Only commit if there are changes
+          git diff --staged --quiet || (git commit -m "chore(data): daily mlbb data sync" && git push)
