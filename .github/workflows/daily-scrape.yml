@@ -1,2 +1,11 @@
-# Deprecated
-# This action has been replaced by daily-sync.yml which handles both scraping and database syncing in a single pipeline.
+name: Deprecated Action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deprecated:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deprecation Notice
+        run: echo "This action is deprecated. Use daily-sync.yml instead."
