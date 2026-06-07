@@ -60,7 +60,6 @@ RETRY_BACKOFF = 3  # exponential base (seconds)
 # HTTP utilities
 # ---------------------------------------------------------------------------
 _session = requests.Session(impersonate="chrome124")
-_session.headers.update({"User-Agent": USER_AGENT})
 
 
 def fetch_html(url: str) -> str:
